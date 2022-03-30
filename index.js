@@ -1,7 +1,7 @@
 const CronJob = require('cron').CronJob;
-const { getDocuments } = require('./jobs/descargaDocumentos');
+const { descargarDocumentos } = require('./jobs/descargaDocumentos');
 
-const job = new CronJob('45 18 * * *', ()=>{
-    getDocuments();
+const job = new CronJob('36 06 * * *', ()=>{
+    descargarDocumentos();
 });
 job.start();
