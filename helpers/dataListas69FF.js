@@ -9,7 +9,8 @@ const consultas69CFF = {
     Firmes: 'http://omawww.sat.gob.mx/cifras_sat/Documents/Firmes.csv',
     No_localizados: 'http://omawww.sat.gob.mx/cifras_sat/Documents/No%20localizados.csv',
     Sentencias: 'http://omawww.sat.gob.mx/cifras_sat/Documents/Sentencias.csv',
-    Eliminados: 'http://omawww.sat.gob.mx/cifras_sat/Documents/Eliminados.csv'
+    Lista69bSat: 'http://omawww.sat.gob.mx/cifras_sat/Documents/Listado_Completo_69-B.csv',
+    //Eliminados: 'http://omawww.sat.gob.mx/cifras_sat/Documents/Eliminados.csv'
 }
 
 module.exports = {
