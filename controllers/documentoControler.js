@@ -9,7 +9,6 @@ let llaves=[];
 let nombreDocumento=''
 let result = [];
 
-
 const procesarDocumento =  (document) =>{
   return new Promise(async (resolve, reject)=>{
     try{
@@ -29,6 +28,7 @@ const procesarDocumento =  (document) =>{
     }
   })
 }
+
 const leerDocumento = document =>{
   return new Promise( (resolve,reject)=>{
     fs.createReadStream(document)
@@ -131,6 +131,7 @@ const estandarizarDoc = doc => {
     }
   })
 }
+
 const renombrarArchivo = (doc) =>{
   return new Promise((resolve, reject)=>{
     try{
@@ -143,7 +144,22 @@ const renombrarArchivo = (doc) =>{
     }
   })
 }
+
+const verificarDocumento = documento =>{
+  let count = 0;
+  let lector = readline.createInterface({
+    input: fs.createReadStream(documento)
+  });
+  lector.on("line", linea => {
+    if(count < 2){
+      console.log({linea, documento});
+    }
+    count++;
+  });
+}
+
 module.exports = {
   procesarDocumento,
-  estandarizarDoc
+  estandarizarDoc,
+  verificarDocumento
 }

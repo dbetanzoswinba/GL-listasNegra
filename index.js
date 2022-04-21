@@ -4,23 +4,22 @@ const CronJob = require('cron').CronJob;
 const { setMensaje, setError } = require('./controllers/logger');
 const { descargarDocumentos } = require('./jobs/descargaDocumentos');
 const { analizarDirectorio } = require('./jobs/analizarDirectorio');
-const { procesarDocumento, estandarizarDoc } = require('./controllers/documentoControler');
+const { procesarDocumento, estandarizarDoc, verificarDocumento } = require('./controllers/documentoControler');
 let contador = 0;
 
-const job = new CronJob('23 19 * * *',async ()=>{
+const job = new CronJob('47 17 * * *',async ()=>{
     try{
         console.log('Iniciando el processo...!!');
-        // setMensaje(`Comenzando el proceso ... ${ new Date().getDate() }`);
-        const arrayDocs = await descargarDocumentos();
-        console.log(await cambiarArchivo(arrayDocs));
-        console.log('terminamos el proceso temporal');
-        return
+        setMensaje(`Comenzando el proceso ... ${ new Date().getDate() }`);
+        await descargarDocumentos();
+        //console.log(await cambiarArchivo(arrayDocs));
         let documentos = analizarDirectorio();
         while(contador < documentos.length){
             try {
                 const documento = `./docs/${documentos[contador]}`;
-                let respuesta = await procesarDocumento(documento);
-                console.log(respuesta);
+                console.log(verificarDocumento(documento));
+                //let respuesta = await procesarDocumento(documento);
+                //console.log(respuesta);
             } catch (error) {
                 console.log(error.message);
             }
@@ -34,16 +33,4 @@ const job = new CronJob('23 19 * * *',async ()=>{
     }
 });
 
-const cambiarArchivo = async docs =>{
-    return new Promise((resolve,reject)=>{
-        analizarDirectorio().map(async item=>{
-            const documento = `./docs/${item}`;
-            if(documento.toUpperCase().includes('SAT')){
-                await estandarizarDoc(documento);
-                resolve(true);
-
-            }
-        });
-    })
-}
 job.start();
